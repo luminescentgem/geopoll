@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PollController!{% endblock %}
+
+{% block poll %}<span class="sr-only">(current)</span>{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Questionnaire</h1>
+    <br>
+    <form action="/post" method="post">
+        <main role="main" class="container">
+            {% for i, item in questions %}
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.question }}</h5>
+                                <p class="card-text">
+                                    {% for j, answer in item.answers %}
+                                    {% if j == (item.answers|length - 1) %} {% set class = "custom-radio15 checked" %}
+                                    {% else %}{% set class = "custom-radio" %}{% endif %}
+                                <div class="custom-control {{ class }}">
+                                    <input value="{{ j }}" type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
+                                           class="custom-control-input">
+                                    <label class="custom-control-label"
+                                           for="option_{{ i }}_{{ j }}">{{ answer }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+            <button type="submit" class="btn btn-secondary btn-lg btn-block" role="button">Terminer</button>
+            <br><br>
+        </main>
+    </form>
+{% endblock %}

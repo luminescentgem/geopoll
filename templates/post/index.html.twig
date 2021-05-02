@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block post %}<span class="sr-only">(current)</span>{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1 class="text-center">Merci de votre contribution!</h1>
+        <br>
+        <h3>Résultats :</h3>
+        <br>
+        <main role="main" class="container">
+            {% for i, item in questions %}
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body">
+                                {% set total = 0 %}
+                                {% for option in answers[i] %}
+                                    {% set total = option + total %}
+                                {% endfor %}
+                                <h5 class="card-title">{{ item.question }}<br><small class="text-muted">({{ total }} réponses)</small></h5>
+                                <p class="card-text">
+                                <div class="accordion accordion-flush" id="accordion_question_{{ i }}">
+                                    {% for j, answer in item.answers %}
+                                        {% include('post/answer.html.twig') %}
+                                    {% endfor %}
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-secondary btn-lg btn-block justify-center" role="button">Terminer
+            </button>
+        </main>
+    </div>
+{% endblock %}
