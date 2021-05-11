@@ -6,6 +6,7 @@ use App\Service\QuestionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PollController extends AbstractController
@@ -27,6 +28,9 @@ class PollController extends AbstractController
 	public function index(Request $request): Response
 	{
 		dump($request->request->all());
+		$session = $request->getSession();
+		$session->set('userinfo', $request->request->all());
+		dump($session);
 
 		return $this->render('poll/index.html.twig', [
 			'controller_name' => 'PollController',

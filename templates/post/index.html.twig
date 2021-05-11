@@ -2,43 +2,30 @@
 
 {% block title %}Hello PostController!{% endblock %}
 
-{% block post %}<span class="sr-only">(current)</span>{% endblock %}
+{% block post %}"nav-link active" aria-current="page"{% endblock %}
 
 {% block body %}
     <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
 
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
     </style>
 
-    <div class="example-wrapper">
+    <main role="main" class="container">
         <h1 class="text-center">Merci de votre contribution!</h1>
         <br>
         <h3>Résultats :</h3>
         <br>
-        <main role="main" class="container">
-            {% for i, item in questions %}
+            {% for i, question in questions %}
                 <div class="row">
                     <div class="col-sm">
                         <div class="card">
                             <div class="card-body">
-                                {% set total = 0 %}
-                                {% for option in answers[i] %}
-                                    {% set total = option + total %}
-                                {% endfor %}
-                                <h5 class="card-title">{{ item.question }}<br><small class="text-muted">({{ total }} réponses)</small></h5>
+                                <h4 class="card-title">{{ question.question|raw }}<br><small class="text-muted">({{ answers[i]['count'] }} réponses)</small></h4>
                                 <p class="card-text">
                                 <div class="accordion accordion-flush" id="accordion_question_{{ i }}">
-                                    {% for j, answer in item.answers %}
+                                    {% for answerId, answer in question.answers %}
+                                        {% if answers[i]['options'][answerId] is defined %}
                                         {% include('post/answer.html.twig') %}
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                                 </p>
@@ -52,5 +39,4 @@
             <button type="submit" class="btn btn-secondary btn-lg btn-block justify-center" role="button">Terminer
             </button>
         </main>
-    </div>
 {% endblock %}

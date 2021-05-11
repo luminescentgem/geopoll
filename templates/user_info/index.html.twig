@@ -2,49 +2,49 @@
 
 {% block title %}Hello UserInfoController!{% endblock %}
 
-{% block userinfo %}<span class="sr-only">(current)</span>{% endblock %}
+{% block userinfo %}"nav-link active" aria-current="page"{% endblock %}
 
 {% block body %}
 
-    <form action="/poll" method="post">
-        <main role="main" class="container">
-            <h1 class="text-center display-1">Bonjour !</h1><br>
-            <h3 class="text-center">Merci d'avoir choisis de dépenser environ <u>5 minutes</u> pour
-                répondre à notre sondage sur
-                les positions religieuses à Lyon !</h3>
-            <br>
-            <h4 style="font-weight: bolder;color: #490000"><u>Rappel</u> : toute donnée récupérée dans le cadre de ce
-                questionnaire est
-                anonyme et ne peut <u>en aucun cas</u> être retracée jusqu'à vous.</h4>
-            <br>
-            <h5 style="font-weight: bolder">Avant toute chose, nous allons avoir besoin de quelques informations
-                personnelles.</h5>
-            <br>
-            {% for i, item in questions %}
-                <div class="row">
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ item.question }}</h5>
-                                <p class="card-text">
-                                    {% for j, answer in item.answers %}
-                                    {% if j == (item.answers|length - 1) %}{% set class = "custom-radio15" %}
-                                    {% else %}{% set class = "custom-radio" %}{% endif %}
-                                <div class="custom-control {{ class }}">
-                                    <input value="{{ j }}" type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
-                                           class="custom-control-input">
-                                    <label class="custom-control-label"
-                                           for="option_{{ i }}_{{ j }}">{{ answer }}</label>
-                                </div>
-                                {% endfor %}
+<form action="/poll" method="post">
+    <main role="main" class="container">
+        <h1 class="text-center display-1">Bonjour !</h1><br>
+        <h3 class="text-center">Merci d'avoir choisi de dépenser environ <u>5 minutes</u> pour<br>
+            répondre à notre sondage sur
+            les positions religieuses à Lyon !</h3>
+        <br>
+        <h4 style="font-weight: bolder;color: #490000"><u>Rappel</u> : toute donnée récupérée dans le cadre de ce
+            questionnaire est
+            anonyme et ne peut <u>en aucun cas</u> être retracée jusqu'à vous.</h4>
+        <br>
+        <h5 style="font-weight: bolder">Avant toute chose, nous allons avoir besoin de quelques informations
+            personnelles.</h5>
+        <br>
+        {% for i, item in questions %}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.question }}</h5>
+                            <p class="card-text">
+                                {% for j, answer in item.answers %}
+                                {% if j == (item.answers|length - 1) %}{% set class = "custom-radio15" %}
+                                {% else %}{% set class = "custom-radio" %}{% endif %}
+                            <div class="custom-control {{ class }}">
+                                <input value="{{ j }}" type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
+                                       class="custom-control-input">
+                                <label class="custom-control-label"
+                                       for="option_{{ i }}_{{ j }}">{{ answer }}</label>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <br>
-            {% endfor %}
-            <button type="submit" class="btn btn-secondary btn-lg btn-block" role="button">Continuer</button>
-            <br><br>
-        </main>
-    </form>
+            </div>
+            <br>
+        {% endfor %}
+        <button type="submit" class="btn btn-secondary btn-lg btn-block" role="button">Continuer</button>
+        <br><br>
+    </main>
+</form>
 {% endblock %}

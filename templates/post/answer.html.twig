@@ -1,21 +1,25 @@
 <div class="accordion-item">
-    <h2 class="accordion-header" id="accordion-header_{{ j }}_{{ i }}">
+    <h2 class="accordion-header" id="accordion-header_{{ answerId }}_{{ i }}">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#flush-collapse_{{ j }}_{{ i }}" aria-expanded="false"
-                aria-controls="flush-collapse_{{ j }}_{{ i }}">
+                data-bs-target="#flush-collapse_{{ answerId }}_{{ i }}" aria-expanded="false"
+                aria-controls="flush-collapse_{{ answerId }}_{{ i }}">
 
 
             <div class="container">
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col-sm-4">
                         {{ answer }}
                     </div>
 
-                    {% set percentage = (answers[i][j] / total * 100)|number_format %}
+                    <div class="col-sm-1">
+                        <small class="text-muted text-end">{{ answers[i]['options'][answerId]['count'] }}</small>
+                    </div>
+
                     <div class="col-sm">
                         <div class="progress">
-                            <div class="progress-bar bg-secondary" role="progressbar" style="width: {{ percentage }}%"
-                                 aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">{{ percentage }}%
+                            <div class="progress-bar bg-secondary" role="progressbar" style="width: {{ answers[i]['options'][answerId]['ratio'] }}%"
+                                 aria-valuenow="{{ answers[i]['options'][answerId]['ratio'] }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ answers[i]['options'][answerId]['ratio'] }}%
                             </div>
                         </div>
                     </div>
@@ -25,10 +29,13 @@
         </button>
     </h2>
 
-    <div id="flush-collapse_{{ j }}_{{ i }}" class="accordion-collapse collapse collapse"
-         aria-labelledby="accordion-header_{{ j }}_{{ i }}" data-bs-parent="#accordion_question_{{ i }}">
+    <div id="flush-collapse_{{ answerId }}_{{ i }}" class="accordion-collapse collapse collapse"
+         aria-labelledby="accordion-header_{{ answerId }}_{{ i }}" data-bs-parent="#accordion_question_{{ i }}">
         {% include('post/by-gender.html.twig') %}
+        <hr/>
         {% include('post/by-age.html.twig') %}
+        <hr/>
         {% include('post/by-religion.html.twig') %}
+        <br><br>
     </div>
 </div>

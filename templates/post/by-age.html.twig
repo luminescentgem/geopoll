@@ -3,65 +3,67 @@
 
     <div class="row">
         <div class="col-sm">
-            <span class="badge bg-primary">Bleu</span> : 7-14
+            <span class="badge bg-primary">Bleu</span> : 7-14 ans
         </div>
         <div class="col-sm">
-            <span class="badge bg-success">Vert</span> : 15-19
+            <span class="badge bg-success">Vert</span> : 15-19 ans
         </div>
         <div class="col-sm">
-            <span class="badge bg-warning text-dark">Orange</span> : 20-30
+            <span class="badge bg-warning text-dark">Orange</span> : 20-30 ans
         </div>
         <div class="col-sm">
-            <span class="badge bg-light text-dark">Blanc</span> : 32-39
+            <span class="badge bg-light text-dark">Blanc</span> : 32-39 ans
         </div>
         <div class="w-100"></div>
         <div class="col-sm">
-            <span class="badge bg-secondary">Gris</span> : 40-49
+            <span class="badge bg-secondary">Gris</span> : 40-49 ans
         </div>
         <div class="col-sm">
-            <span class="badge bg-danger">Rouge</span> : 50-59
+            <span class="badge bg-danger">Rouge</span> : 50-59 ans
         </div>
         <div class="col-sm">
-            <span class="badge bg-info text-dark">Cyan</span> : 60-65
+            <span class="badge bg-info text-dark">Cyan</span> : 60-65 ans
         </div>
         <div class="col-sm">
-            <span class="badge bg-dark">Noir</span> : 66+
+            <span class="badge bg-dark">Noir</span> : 66+ ans
         </div>
     </div>
 
     <br>
     <div class="progress"  style="height: 20px;">
-        <div class="progress-bar bg-primary" role="progressbar" style="width: 11.11%" aria-valuenow="11.11"
-             aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][0]['ratio'] }}%" aria-valuenow="{{ answers[i]['options'][answerId]['age'][0]['ratio'] }}"
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][0]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-secondary" role="progressbar" style="width: 11.11%" aria-valuenow="11.11"
-             aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-secondary" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][1]['ratio'] }}%" aria-valuenow="{{ answers[i]['options'][answerId]['age'][1]['ratio'] }}"
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][1]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-success" role="progressbar" style="width: 11.11%" aria-valuenow="11.11"
-             aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-success" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][2]['ratio'] }}%" aria-valuenow="{{ answers[i]['options'][answerId]['age'][2]['ratio'] }}"
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][2]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-danger" role="progressbar" style="width: 11.11%" aria-valuenow="11.11"
-             aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][3]['ratio'] }}%" aria-valuenow="{{ answers[i]['options'][answerId]['age'][3]['ratio'] }}"
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][3]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: 11.11%"
-             aria-valuenow="11.11" aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-warning text-dark" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][4]['ratio'] }}%"
+             aria-valuenow="{{ answers[i]['options'][answerId]['age'][4]['ratio'] }}" aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][4]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-info text-dark" role="progressbar" style="width: 11.11%"
-             aria-valuenow="11.11" aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-info text-dark" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][5]['ratio'] }}%"
+             aria-valuenow="{{ answers[i]['options'][answerId]['age'][5]['ratio'] }}" aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][5]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-light text-dark" role="progressbar" style="width: 11.11%"
-             aria-valuenow="11.11" aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-light text-dark" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][6]['ratio'] }}%"
+             aria-valuenow="{{ answers[i]['options'][answerId]['age'][6]['ratio'] }}" aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][6]['ratio'] }}%
         </div>
 
-        <div class="progress-bar bg-dark" role="progressbar" style="width: 11.11%" aria-valuenow="11.11"
-             aria-valuemin="0" aria-valuemax="100">11.11%
+        <div class="progress-bar bg-dark" role="progressbar" style="width: {{ answers[i]['options'][answerId]['age'][7]['ratio'] }}%" aria-valuenow="{{ answers[i]['options'][answerId]['age'][7]['ratio'] }}"
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['age'][7]['ratio'] }}%
         </div>
 
     </div>
+    <br>
 </div>
+

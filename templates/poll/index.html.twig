@@ -2,10 +2,13 @@
 
 {% block title %}Hello PollController!{% endblock %}
 
-{% block poll %}<span class="sr-only">(current)</span>{% endblock %}
+{% block poll %}"nav-link active" aria-current="page"{% endblock %}
 
 {% block body %}
     <h1 class="text-center">Questionnaire</h1>
+    <br>
+    <h5 class="text-center text-muted" style="font-weight:bolder">Essayez le plus possible de ne pas cocher de réponse neutre,
+        <br>puisque celles-ci sont difficilement analysables.</h5>
     <br>
     <form action="/post" method="post">
         <main role="main" class="container">
@@ -14,12 +17,10 @@
                     <div class="col-sm">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">{{ item.question }}</h5>
+                                <h5 class="card-title">{{ item.question|raw }}</h5>
                                 <p class="card-text">
                                     {% for j, answer in item.answers %}
-                                    {% if j == (item.answers|length - 1) %} {% set class = "custom-radio15 checked" %}
-                                    {% else %}{% set class = "custom-radio" %}{% endif %}
-                                <div class="custom-control {{ class }}">
+                                <div class="custom-control custom-radio">
                                     <input value="{{ j }}" type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
                                            class="custom-control-input">
                                     <label class="custom-control-label"

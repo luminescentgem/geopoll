@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block home %}"nav-link active" aria-current="page"{% endblock %}
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+
+</style>
+
+    <div class="container">
+        <div class="row text-center">
+            <h1 style="margin-top: 100px; font-weight: lighter; color: darkred" class="display-1">Sondage</h1>
+        </div>
+        <div class="row text-center">
+            <h1 style="margin-top: 100px" class="display-6 text-muted">Organisé par Axel B. et Garice B.</h1>
+        </div>
+        <div class="row text-center">
+            <h5 style="margin-top: 20px; font-weight: lighter">Votre avis sur la religion dans votre ville/village</h5>
+        </div>
+        <div class="row text-center">
+            <div class="d-grid gap-2 d-md-block">
+                <a href="/user/info" style="margin-top: 200px" class="btn btn-outline-danger btn-lg">>> Commencer le questionnaire</a>
+            </div>
+        </div>
+        <hr style="margin-top: 125px">
+        <footer>
+            <div class="text-muted">
+                Créé avec Bootstrap
+            </div>
+        </footer>
+    </div>
+
+{% endblock %}

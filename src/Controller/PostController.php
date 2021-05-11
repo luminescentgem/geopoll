@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Repository\AnswerRepository;
 use App\Service\QuestionService;
+use App\Service\UserInfoService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,6 +32,7 @@ class PostController extends AbstractController
 	 * @var Connection
 	 */
 	private $connection;
+	private UserInfoService $infoService;
 
 	/**
 	 * PostController constructor.
@@ -38,51 +40,94 @@ class PostController extends AbstractController
 	public function __construct(EntityManagerInterface $entityManager,
 										 AnswerRepository $repository,
 										 QuestionService $questionService,
+										 UserInfoService $infoService,
 										 Connection $connection)
 	{
 		$this->entityManager = $entityManager;
 		$this->repository = $repository;
 		$this->questionService = $questionService;
 		$this->connection = $connection;
+		$this->infoService = $infoService;
 	}
 
+	private function countVariations(string $variation, int $count, string $questionId, int $answerId, array $values): array
+	{
+		$rows = $this->connection->executeQuery("select $variation as value, count(*) as count from answer where question='$questionId' and option='$answerId' group by $variation")->fetchAllAssociative();
+
+		foreach ($rows as $i => $row) {
+			$rows[$i]['ratio'] = round(100 * $row['count'] / $count);
+		}
+
+		$variations = [];
+		foreach ($values as $value) {
+			$variations[$value] = [
+				'count' => 0,
+				'ratio' => 0,
+			];
+			foreach ($rows as $row) {
+				if ($row['value'] == $value) {
+					$variations[$value] = $row;
+					break;
+				}
+			}
+		}
+
+		return $variations;
+	}
+	/**
+	 * @throws \Doctrine\DBAL\Driver\Exception
+	 * @throws \Doctrine\DBAL\Exception
+	 */
 	#[Route('/post', name: 'post')]
 	public function index(Request $request): Response
 	{
+
+		$userinfo = $request->getSession()->get('userinfo');
+
 		foreach ($request->request->all() as $k => $v) {
 			$obj = new Answer();
 			$obj->setQuestion($k);
 			$obj->setOption((int)$v);
 			$obj->setTimestamp(new \DateTime());
+			$obj->setSexe((int)$userinfo["sexe"]);
+			$obj->setAge((int)$userinfo["age"]);
+			$obj->setBelief((int)$userinfo["belief"]);
 			$this->entityManager->persist($obj);
 		}
 
 		$this->entityManager->flush();
 
-		$stmt = $this->connection->executeQuery("select question, option, count(*) from answer group by question, option");
-		$counts = $stmt->fetchAllNumeric();
-
 		$questions = $this->questionService->getQuestions();
 
+		// dump($counts);
+		$info = $this->infoService->getInfo();
+
 		$answers = [];
+
 		foreach ($questions as $questionId => $question) {
+			$totalcount = $this->connection->executeQuery("select count(*) from answer where question='$questionId'")->fetchAllNumeric();
+			$nb = $totalcount[0][0];
+			$answers[$questionId]['count'] = $nb;
+
 			foreach ($question['answers'] as $answerId => $answer) {
-				$answers[$questionId][$answerId] = 0;
-				foreach ($counts as $count) {
-					if ($count[0] == $questionId && $count[1] == $answerId) {
-						$answers[$questionId][$answerId] = (int) $count[2];
-						break;
-					}
+				$counts = $this->connection->executeQuery("select count(*) from answer where question='$questionId' and option='$answerId'")->fetchAllNumeric();
+				$countrow = $counts[0][0];
+
+				$answers[$questionId]['options'][$answerId]['count'] = $countrow;
+				$answers[$questionId]['options'][$answerId]['ratio'] = $nb ? round(100 * $countrow / $nb) : 0;
+
+				foreach ($info as $variation => $variationInfo) {
+					$answers[$questionId]['options'][$answerId][$variation] = $this->countVariations(
+						$variation,
+						$countrow,
+						$questionId,
+						$answerId,
+						array_keys($variationInfo['answers'])
+					);
 				}
 			}
 		}
 		$totals = [];
-		/*
-		foreach($answers as $answerId => $answer) {
-			foreach($answer as $optionId => $option) {
-				$totals[$answerId] += $option;
-			}
-		}*/
 
 		dump($answers);
 
