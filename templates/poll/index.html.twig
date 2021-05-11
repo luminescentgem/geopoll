@@ -21,7 +21,7 @@
                                 <p class="card-text">
                                     {% for j, answer in item.answers %}
                                 <div class="custom-control custom-radio">
-                                    <input value="{{ j }}" type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
+                                    <input value="{{ j }}" required type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
                                            class="custom-control-input">
                                     <label class="custom-control-label"
                                            for="option_{{ i }}_{{ j }}">{{ answer }}</label>

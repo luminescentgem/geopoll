@@ -31,7 +31,7 @@
                                 {% if j == (item.answers|length - 1) %}{% set class = "custom-radio15" %}
                                 {% else %}{% set class = "custom-radio" %}{% endif %}
                             <div class="custom-control {{ class }}">
-                                <input value="{{ j }}" type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
+                                <input value="{{ j }}" required type="radio" id="option_{{ i }}_{{ j }}" name="{{ i }}"
                                        class="custom-control-input">
                                 <label class="custom-control-label"
                                        for="option_{{ i }}_{{ j }}">{{ answer }}</label>
