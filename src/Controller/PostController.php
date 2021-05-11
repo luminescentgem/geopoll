@@ -16,126 +16,115 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
-	/**
-	 * @var AnswerRepository
-	 */
-	private $repository;
-	/**
-	 * @var QuestionService
-	 */
-	private $questionService;
-	/**
-	 * @var Connection
-	 */
-	private $connection;
-	private UserInfoService $infoService;
+    private EntityManagerInterface $entityManager;
 
-	/**
-	 * PostController constructor.
-	 */
-	public function __construct(EntityManagerInterface $entityManager,
-										 AnswerRepository $repository,
-										 QuestionService $questionService,
-										 UserInfoService $infoService,
-										 Connection $connection)
-	{
-		$this->entityManager = $entityManager;
-		$this->repository = $repository;
-		$this->questionService = $questionService;
-		$this->connection = $connection;
-		$this->infoService = $infoService;
-	}
+    private AnswerRepository $repository;
 
-	private function countVariations(string $variation, int $count, string $questionId, int $answerId, array $values): array
-	{
-		$rows = $this->connection->executeQuery("select $variation as value, count(*) as count from answer where question='$questionId' and option='$answerId' group by $variation")->fetchAllAssociative();
+    private QuestionService $questionService;
 
-		foreach ($rows as $i => $row) {
-			$rows[$i]['ratio'] = round(100 * $row['count'] / $count);
-		}
+    private Connection $connection;
 
-		$variations = [];
-		foreach ($values as $value) {
-			$variations[$value] = [
-				'count' => 0,
-				'ratio' => 0,
-			];
-			foreach ($rows as $row) {
-				if ($row['value'] == $value) {
-					$variations[$value] = $row;
-					break;
-				}
-			}
-		}
+    private UserInfoService $infoService;
 
-		return $variations;
-	}
-	/**
-	 * @throws \Doctrine\DBAL\Driver\Exception
-	 * @throws \Doctrine\DBAL\Exception
-	 */
-	#[Route('/post', name: 'post')]
-	public function index(Request $request): Response
-	{
+    /**
+     * PostController constructor.
+     */
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        AnswerRepository $repository,
+        QuestionService $questionService,
+        UserInfoService $infoService,
+        Connection $connection
+    ) {
+        $this->entityManager = $entityManager;
+        $this->repository = $repository;
+        $this->questionService = $questionService;
+        $this->connection = $connection;
+        $this->infoService = $infoService;
+    }
 
-		$userinfo = $request->getSession()->get('userinfo');
+    private function countVariations(string $variation, int $count, string $questionId, int $answerId, array $values
+    ): array {
+        $rows = $this->connection->executeQuery("select $variation as value, count(*) as count from answer where question='$questionId' and option='$answerId' group by $variation")->fetchAllAssociative();
 
-		foreach ($request->request->all() as $k => $v) {
-			$obj = new Answer();
-			$obj->setQuestion($k);
-			$obj->setOption((int)$v);
-			$obj->setTimestamp(new \DateTime());
-			$obj->setSexe((int)$userinfo["sexe"]);
-			$obj->setAge((int)$userinfo["age"]);
-			$obj->setBelief((int)$userinfo["belief"]);
-			$this->entityManager->persist($obj);
-		}
+        foreach ($rows as $i => $row) {
+            $rows[$i]['ratio'] = round(100 * $row['count'] / $count);
+        }
 
-		$this->entityManager->flush();
+        $variations = [];
+        foreach ($values as $value) {
+            $variations[$value] = [
+                'count' => 0,
+                'ratio' => 0,
+            ];
+            foreach ($rows as $row) {
+                if ($row['value'] == $value) {
+                    $variations[$value] = $row;
+                    break;
+                }
+            }
+        }
 
-		$questions = $this->questionService->getQuestions();
+        return $variations;
+    }
 
-		// dump($counts);
-		$info = $this->infoService->getInfo();
+    /**
+     * @Route("/post", name="post")
+     */
+    public function index(Request $request): Response
+    {
 
-		$answers = [];
+        $userinfo = $request->getSession()->get('userinfo');
 
-		foreach ($questions as $questionId => $question) {
-			$totalcount = $this->connection->executeQuery("select count(*) from answer where question='$questionId'")->fetchAllNumeric();
-			$nb = $totalcount[0][0];
-			$answers[$questionId]['count'] = $nb;
+        foreach ($request->request->all() as $k => $v) {
+            $obj = new Answer();
+            $obj->setQuestion($k);
+            $obj->setOption((int) $v);
+            $obj->setTimestamp(new \DateTime());
+            $obj->setSexe((int) $userinfo["sexe"]);
+            $obj->setAge((int) $userinfo["age"]);
+            $obj->setBelief((int) $userinfo["belief"]);
+            $this->entityManager->persist($obj);
+        }
 
-			foreach ($question['answers'] as $answerId => $answer) {
-				$counts = $this->connection->executeQuery("select count(*) from answer where question='$questionId' and option='$answerId'")->fetchAllNumeric();
-				$countrow = $counts[0][0];
+        $this->entityManager->flush();
 
-				$answers[$questionId]['options'][$answerId]['count'] = $countrow;
-				$answers[$questionId]['options'][$answerId]['ratio'] = $nb ? round(100 * $countrow / $nb) : 0;
+        $questions = $this->questionService->getQuestions();
 
-				foreach ($info as $variation => $variationInfo) {
-					$answers[$questionId]['options'][$answerId][$variation] = $this->countVariations(
-						$variation,
-						$countrow,
-						$questionId,
-						$answerId,
-						array_keys($variationInfo['answers'])
-					);
-				}
-			}
-		}
-		$totals = [];
+        $info = $this->infoService->getInfo();
 
-		dump($answers);
+        $answers = [];
 
-		return $this->render('post/index.html.twig', [
-			'controller_name' => 'PostController',
-			'questions' => $questions,
-			'answers' => $answers,
-			'totals' => $totals,
-		]);
-	}
+        foreach ($questions as $questionId => $question) {
+            $totalcount = $this->connection->executeQuery("select count(*) from answer where question='$questionId'")->fetchAllNumeric();
+            $nb = $totalcount[0][0];
+            $answers[$questionId]['count'] = $nb;
+
+            foreach ($question['answers'] as $answerId => $answer) {
+                $counts = $this->connection->executeQuery("select count(*) from answer where question='$questionId' and option='$answerId'")->fetchAllNumeric();
+                $countrow = $counts[0][0];
+
+                $answers[$questionId]['options'][$answerId]['count'] = $countrow;
+                $answers[$questionId]['options'][$answerId]['ratio'] = $nb ? round(100 * $countrow / $nb) : 0;
+
+                foreach ($info as $variation => $variationInfo) {
+                    $answers[$questionId]['options'][$answerId][$variation] = $this->countVariations(
+                        $variation,
+                        $countrow,
+                        $questionId,
+                        $answerId,
+                        array_keys($variationInfo['answers'])
+                    );
+                }
+            }
+        }
+        $totals = [];
+
+        return $this->render('post/index.html.twig', [
+            'controller_name' => 'PostController',
+            'questions'       => $questions,
+            'answers'         => $answers,
+            'totals'          => $totals,
+        ]);
+    }
 }
