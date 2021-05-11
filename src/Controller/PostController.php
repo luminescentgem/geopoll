@@ -45,7 +45,7 @@ class PostController extends AbstractController
 
     private function countVariations(string $variation, int $count, string $questionId, int $answerId, array $values
     ): array {
-        $rows = $this->connection->executeQuery("select $variation as value, count(*) as count from answer where question='$questionId' and option='$answerId' group by $variation")->fetchAllAssociative();
+        $rows = $this->connection->executeQuery("select $variation as value, count(*) as count from answer where question='$questionId' and answer_option='$answerId' group by $variation")->fetchAllAssociative();
 
         foreach ($rows as $i => $row) {
             $rows[$i]['ratio'] = round(100 * $row['count'] / $count);
@@ -101,7 +101,7 @@ class PostController extends AbstractController
             $answers[$questionId]['count'] = $nb;
 
             foreach ($question['answers'] as $answerId => $answer) {
-                $counts = $this->connection->executeQuery("select count(*) from answer where question='$questionId' and option='$answerId'")->fetchAllNumeric();
+                $counts = $this->connection->executeQuery("select count(*) from answer where question='$questionId' and answer_option='$answerId'")->fetchAllNumeric();
                 $countrow = $counts[0][0];
 
                 $answers[$questionId]['options'][$answerId]['count'] = $countrow;

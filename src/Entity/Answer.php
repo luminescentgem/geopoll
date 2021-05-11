@@ -23,7 +23,7 @@ class Answer
     private $question;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="answer_option")
      */
     private $option;
 
