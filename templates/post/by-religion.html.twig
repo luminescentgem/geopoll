@@ -14,13 +14,13 @@
         <div class="progress-bar bg-danger" role="progressbar"
              style="width: {{ answers[i]['options'][answerId]['belief'][0]['ratio'] }}%"
              aria-valuenow="{{ answers[i]['options'][answerId]['belief'][0]['ratio'] }}"
-             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['belief'][0]['ratio'] }}
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['belief'][0]['ratio'] }}%
         </div>
 
         <div class="progress-bar bg-secondary" role="progressbar"
              style="width: {{ answers[i]['options'][answerId]['belief'][1]['ratio'] }}%"
              aria-valuenow="{{ answers[i]['options'][answerId]['belief'][1]['ratio'] }}"
-             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['belief'][1]['ratio'] }}
+             aria-valuemin="0" aria-valuemax="100">{{ answers[i]['options'][answerId]['belief'][1]['ratio'] }}%
         </div>
     </div>
     <br>
