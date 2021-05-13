@@ -54,13 +54,13 @@ class QuestionService
                 ],
             ],
             "e" => [
-                "question" => "Pensez-vous que les gens puissent pratiquer leur religion en toute tranquilité en France ?",
+                "question" => "Pensez-vous qu'il existe des discriminations envers les religions en France ?",
                 "answers"  => [
-                    0 => "Non, la discrimination est omniprésente.",
-                    1 => "Il n'est pas rare de se faire pérsécuter pour sa religion.",
+                    0 => "Il n'en existe que trop.",
+                    1 => "Il n'est pas rare de se faire persécuter pour sa religion.",
                     2 => "Je n'ai pas de réponse à apporter.",
-                    3 => "Oui, je n'ai pas connaissance de faits contraires.",
-                    4 => "Oui, ce genre de discrimination n'existe pas.",
+                    3 => "Non, je n'ai pas connaissance de faits de ce genre.",
+                    4 => "Non, ce genre de discrimination n'existe pas.",
                     5 => "Je ne souhaite pas répondre.",
                 ],
             ],
