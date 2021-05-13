@@ -74,7 +74,7 @@ class PostController extends AbstractController
     public function index(Request $request): Response
     {
            
-        $localanswers = $request->request->all());
+        $localanswers = $request->request->all();
         $userinfo = $request->getSession()->get('userinfo');
 
         foreach ($request->request->all() as $k => $v) {
