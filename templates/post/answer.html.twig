@@ -3,11 +3,12 @@
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#flush-collapse_{{ answerId }}_{{ i }}" aria-expanded="false"
                 aria-controls="flush-collapse_{{ answerId }}_{{ i }}">
-                {% if (localAnswers[i][answerId] is defined) %}{{ set color = 'red' }}{% else %}{{ set color = 'black' }}{{ endif }}
+                
+                <!-- {% if (localAnswers[i][answerId] is defined) %}{{ set color = 'red' }}{% else %}{{ set color = 'black' }}{{ endif }} -->
                 
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4" style="color: {{ color }};">
+                    <div class="col-sm-4">
                         {{ answer }}
                     </div>
 
