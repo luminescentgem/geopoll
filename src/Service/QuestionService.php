@@ -21,7 +21,7 @@ class QuestionService
                 ],
             ],
             "b" => [
-                "question" => "Il est interdit de montrer des signes de religion en public. Votre avis ?",
+                "question" => "Il est interdit de porter des signes de religion ostencibles en publique. Votre avis ?",
                 "answers"  => [
                     0 => "Heureusement !",
                     1 => "C'est une bonne chose.",
@@ -54,13 +54,13 @@ class QuestionService
                 ],
             ],
             "e" => [
-                "question" => "Existe-t-il des discriminiations envers les minorités religieuses en France ?",
+                "question" => "Pensez-vous que les gens puissent pratiquer leur religion en toute tranquilité en France ?",
                 "answers"  => [
-                    0 => "Il n'en existe que trop.",
-                    1 => "Elles sont présentes, bien que rares.",
+                    0 => "Non, la discrimination est omniprésente.",
+                    1 => "Il n'est pas rare de se faire pérsécuter pour sa religion.",
                     2 => "Je n'ai pas de réponse à apporter.",
-                    3 => "Non, je n'ai pas connaissance de faits de ce genre.",
-                    4 => "Non, ce genre de discriminations n'existe pas.",
+                    3 => "Oui, je n'ai pas connaissance de faits contraires.",
+                    4 => "Oui, ce genre de discrimination n'existe pas.",
                     5 => "Je ne souhaite pas répondre.",
                 ],
             ],
@@ -72,7 +72,7 @@ class QuestionService
                     1 => "Oui, presque tout le temps.",
                     2 => "Je n'ai pas d'opinion à ce sujet.",
                     3 => "Ça laisse encore à désirer...",
-                    4 => "Elle n'est clairement pas respectée.",
+                    4 => "La loi n'est clairement pas respectée.",
                     5 => "Je ne veux pas donner mon avis.",
                 ],
             ],
