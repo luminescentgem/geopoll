@@ -21,7 +21,7 @@ class QuestionService
                 ],
             ],
             "b" => [
-                "question" => "Il est interdit de porter des signes de religion ostencibles en publique. Votre avis ?",
+                "question" => "Il est interdit de porter des signes de religion ostensibles en publique. Votre avis ?",
                 "answers"  => [
                     0 => "Heureusement !",
                     1 => "C'est une bonne chose.",
