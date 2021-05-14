@@ -57,7 +57,7 @@ class QuestionService
                 "question" => "Pensez-vous qu'il existe des discriminations envers les religions en France ?",
                 "answers"  => [
                     0 => "Il n'en existe que trop.",
-                    1 => "Il n'est pas rare de se faire discriminé pour sa religion.",
+                    1 => "Il n'est pas rare d'être discriminé pour sa religion.",
                     2 => "Je n'ai pas de réponse à apporter.",
                     3 => "Non, je n'ai pas connaissance de faits de ce genre.",
                     4 => "Non, ce genre de discrimination n'existe pas.",
